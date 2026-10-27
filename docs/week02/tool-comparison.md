@@ -132,7 +132,7 @@ Testing was performed manually in a local development environment. The JavaScrip
 
 
 
-The Claude implementation will be copied into the main application after this comparison. The unselected ChatGPT output will remain in experiments/week02/` for reference.
+The Claude implementation was selected and copied into the main application after the comparison. It was tested locally, committed to Git, and pushed to GitHub. The unselected ChatGPT implementation remains in `experiments/week02/chatgpt/` for reference.
 
 
 
