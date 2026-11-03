@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}All enquiries{% endblock %}
+
+{% block content %}
+<h2>All enquiries</h2>
+
+{% if enquiries %}
+<table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Service</th>
+            <th>Status</th>
+            <th>Follow-up date</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for enquiry in enquiries %}
+        <tr>
+            <td>
+                <a href="{{ url_for('show_enquiry', enquiry_id=enquiry['id']) }}">
+                    {{ enquiry['customer_name'] }}
+                </a>
+            </td>
+            <td>{{ enquiry['service_type'] or '' }}</td>
+            <td>{{ enquiry['status'] | replace('_', ' ') }}</td>
+            <td>{{ enquiry['follow_up_date'] or '' }}</td>
+            <td>{{ enquiry['created_at'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No enquiries yet. <a href="{{ url_for('new_enquiry') }}">Add the first one.</a></p>
+{% endif %}
+{% endblock %}
