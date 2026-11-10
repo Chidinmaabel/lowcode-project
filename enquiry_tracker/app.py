@@ -1,6 +1,7 @@
 import os
-
-from flask import Flask, abort, redirect, render_template, request, url_for
+from datetime import date
+import secrets
+from flask import Flask, abort, redirect, render_template, request, url_for, session
 
 from db import get_db, init_app
 
@@ -34,11 +35,17 @@ def clean_form(form):
     if not data["email"]:
         errors["email"] = "Email is required."
 
+    if data["follow_up_date"]:
+        try:
+            date.fromisoformat(data["follow_up_date"])
+        except ValueError:
+            errors["follow_up_date"] = "Please enter a valid follow-up date."
     return data, errors
 
 
 def create_app():
     app = Flask(__name__)
+    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY") or os.urandom(32)
     app.config["DATABASE"] = os.path.join(app.root_path, "enquiries.db")
 
     init_app(app)

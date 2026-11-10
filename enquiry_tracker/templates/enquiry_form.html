@@ -49,6 +49,9 @@
         <label for="follow_up_date">Follow-up date</label><br>
         <input type="date" id="follow_up_date" name="follow_up_date"
                value="{{ data.get('follow_up_date', '') }}">
+               {% if errors.get('follow_up_date') %}
+               <br><strong>{{ errors['follow_up_date'] }}</strong>
+               {% endif %}
     </p>
 
     <p>
