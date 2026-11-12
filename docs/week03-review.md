@@ -60,7 +60,17 @@ The application has two forms that submit POST requests, but neither includes CS
 
 I accept this finding because CSRF protection helps prevent unwanted requests being submitted to the application through another website. Although this is a course project, it is important to consider security before making the application available to real users.
 
-**Status:** Accepted – not yet fixed.
+**Status:** Accepted – fixed and tested.
+**Implementation and testing result:**
+
+CSRF protection was added to `app.py` and both POST forms: `templates/enquiry_form.html` and `templates/enquiry_detail.html`.
+
+I tested two scenarios:
+
+- **Request without a CSRF token:** rejected by the server with HTTP 400.
+- **Normal form submission with a valid CSRF token:** accepted successfully. I changed the enquiry status to `quote_sent`.
+
+**Conclusion:** The CSRF protection worked in both tests. Requests without the required token were rejected, while normal form submissions were accepted.
 
 ### Finding 3 – Customer email addresses are not checked for valid format
 

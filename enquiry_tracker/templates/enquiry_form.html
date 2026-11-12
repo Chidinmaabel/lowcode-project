@@ -6,6 +6,7 @@
 <h2>New enquiry</h2>
 
 <form method="post" action="{{ url_for('create_enquiry') }}">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
     <p>
         <label for="customer_name">Customer name (required)</label><br>
         <input type="text" id="customer_name" name="customer_name"

@@ -49,7 +49,26 @@ def create_app():
     app.config["DATABASE"] = os.path.join(app.root_path, "enquiries.db")
 
     init_app(app)
+    @app.before_request
+    def protect_post_requests():
+        if request.method == "POST":
+            token = session.get("_csrf_token")
+            submitted_token = request.form.get("_csrf_token")
 
+            if not token or not submitted_token:
+                abort(400)
+
+            if not secrets.compare_digest(token, submitted_token):
+                abort(400)
+
+    @app.context_processor
+    def inject_csrf_token():
+        def generate_csrf_token():
+            if "_csrf_token" not in session:
+                session["_csrf_token"] = secrets.token_hex(32)
+            return session["_csrf_token"]
+
+        return {"csrf_token": generate_csrf_token}
     # GET / : list all enquiries, newest first
     @app.route("/")
     def index():

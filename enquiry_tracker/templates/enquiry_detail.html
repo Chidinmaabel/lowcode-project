@@ -18,6 +18,7 @@
 <h3>Change status</h3>
 <form method="post"
       action="{{ url_for('change_status', enquiry_id=enquiry['id']) }}">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
     <label for="status">Status</label>
     <select id="status" name="status">
         {% for s in statuses %}
