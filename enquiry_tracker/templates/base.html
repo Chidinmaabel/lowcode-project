@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Customer Enquiry Tracker{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Customer Enquiry Tracker</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">All enquiries</a> |
+            <a href="{{ url_for('new_enquiry') }}">New enquiry</a>
+        </nav>
+        <hr>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

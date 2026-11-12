@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}New enquiry{% endblock %}
+
+{% block content %}
+<h2>New enquiry</h2>
+
+<form method="post" action="{{ url_for('create_enquiry') }}">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+    <p>
+        <label for="customer_name">Customer name (required)</label><br>
+        <input type="text" id="customer_name" name="customer_name"
+               maxlength="200" value="{{ data.get('customer_name', '') }}">
+        {% if errors.get('customer_name') %}
+        <br><strong>{{ errors['customer_name'] }}</strong>
+        {% endif %}
+    </p>
+
+    <p>
+        <label for="phone">Phone (required)</label><br>
+        <input type="text" id="phone" name="phone"
+               value="{{ data.get('phone', '') }}">
+        {% if errors.get('phone') %}
+        <br><strong>{{ errors['phone'] }}</strong>
+        {% endif %}
+    </p>
+
+    <p>
+        <label for="email">Email (required)</label><br>
+        <input type="text" id="email" name="email"
+               value="{{ data.get('email', '') }}">
+        {% if errors.get('email') %}
+        <br><strong>{{ errors['email'] }}</strong>
+        {% endif %}
+    </p>
+
+    <p>
+        <label for="service_type">Service type</label><br>
+        <input type="text" id="service_type" name="service_type"
+               value="{{ data.get('service_type', '') }}">
+    </p>
+
+    <p>
+        <label for="description">Description</label><br>
+        <textarea id="description" name="description" rows="5"
+                  cols="40">{{ data.get('description', '') }}</textarea>
+    </p>
+
+    <p>
+        <label for="follow_up_date">Follow-up date</label><br>
+        <input type="date" id="follow_up_date" name="follow_up_date"
+               value="{{ data.get('follow_up_date', '') }}">
+               {% if errors.get('follow_up_date') %}
+               <br><strong>{{ errors['follow_up_date'] }}</strong>
+               {% endif %}
+    </p>
+
+    <p>
+        <button type="submit">Save enquiry</button>
+        <a href="{{ url_for('index') }}">Cancel</a>
+    </p>
+</form>
+{% endblock %}
