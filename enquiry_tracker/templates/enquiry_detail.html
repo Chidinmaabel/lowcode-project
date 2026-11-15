@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}{{ enquiry['customer_name'] }}{% endblock %}
+
+{% block content %}
+<h2>{{ enquiry['customer_name'] }}</h2>
+
+<table border="1" cellpadding="6" cellspacing="0">
+    <tr><th>Phone</th><td>{{ enquiry['phone'] }}</td></tr>
+    <tr><th>Email</th><td>{{ enquiry['email'] }}</td></tr>
+    <tr><th>Service type</th><td>{{ enquiry['service_type'] or '' }}</td></tr>
+    <tr><th>Description</th><td>{{ enquiry['description'] or '' }}</td></tr>
+    <tr><th>Status</th><td>{{ enquiry['status'] | replace('_', ' ') }}</td></tr>
+    <tr><th>Follow-up date</th><td>{{ enquiry['follow_up_date'] or '' }}</td></tr>
+    <tr><th>Created</th><td>{{ enquiry['created_at'] }}</td></tr>
+</table>
+
+<h3>Change status</h3>
+<form method="post"
+      action="{{ url_for('change_status', enquiry_id=enquiry['id']) }}">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+    <label for="status">Status</label>
+    <select id="status" name="status">
+        {% for s in statuses %}
+        <option value="{{ s }}" {% if s == enquiry['status'] %}selected{% endif %}>
+            {{ s | replace('_', ' ') }}
+        </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Update status</button>
+</form>
+
+<p><a href="{{ url_for('index') }}">Back to all enquiries</a></p>
+{% endblock %}
